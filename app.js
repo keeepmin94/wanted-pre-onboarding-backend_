@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const authRouter = require("./routes/auth");
+const postRouter = require("./routes/post");
 
 const { sequelize } = require("./models");
 
@@ -28,6 +29,7 @@ app.use(express.json()); //bodyParser json
 app.use(express.urlencoded({ extended: false })); //bodyParser form
 
 app.use("/auth", authRouter);
+app.use("/post", postRouter);
 
 app.use((req, res, next) => {
   //404 전용(없는 라우터)

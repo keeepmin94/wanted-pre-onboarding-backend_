@@ -5,7 +5,7 @@ class Post extends Sequelize.Model {
     Post.init(
       {
         content: {
-          type: Sequelize.STRING(140),
+          type: Sequelize.TEXT,
           allowNull: false,
           comment: "게시글 내용",
         },
