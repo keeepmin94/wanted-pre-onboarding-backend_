@@ -3,7 +3,7 @@ const { body } = require("express-validator");
 const router = express.Router();
 
 const { validationResult } = require("express-validator");
-const { join } = require("../controllers/auth");
+const { join, login } = require("../controllers/auth");
 const {
   signupValidator,
   validatorErrorChecker,
@@ -11,5 +11,8 @@ const {
 
 // POST /auth/join
 router.post("/join", signupValidator, validatorErrorChecker, join);
+
+// POST /auth/login
+router.post("/login", signupValidator, validatorErrorChecker, login);
 
 module.exports = router;
