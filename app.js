@@ -12,6 +12,8 @@ const { sequelize } = require("./models");
 const app = express();
 
 app.set("port", process.env.PORT || 3000);
+// app.set("view engine", "ejs");
+// app.engine("html", require("ejs").renderFile);
 
 sequelize
   .sync({ force: false })
@@ -21,6 +23,9 @@ sequelize
   .catch((err) => {
     console.error(err);
   });
+
+app.use(express.json()); //bodyParser json
+app.use(express.urlencoded({ extended: false })); //bodyParser form
 
 app.use("/auth", authRouter);
 
@@ -36,7 +41,7 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = process.env.NODE_ENV !== "production" ? err : {}; //베포모드|개발모드 일때 에러 출력(보안) /(베포 모드시 에러 전용 로그 기록)
   res.status(err.status || 500);
-  res.render("error");
+  //res.render("error");
 });
 
 module.exports = app;
