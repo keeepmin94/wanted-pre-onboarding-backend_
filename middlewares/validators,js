@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 const { validationResult } = require("express-validator");
 
 // 회원 가입 요청에 대한 유효성 검사 미들웨어
@@ -8,6 +8,20 @@ exports.signupValidator = [
     .trim()
     .isLength({ min: 8 })
     .withMessage("pw는 8자 이상이어야 합니다."),
+];
+
+// 페이지네이션 유효성 검사
+exports.paginationValidator = [
+  param("page")
+    .isInt()
+    .withMessage("숫자만 입력해 주세요.")
+    .custom((value) => value > 0)
+    .withMessage("Page must be greater than 0"),
+];
+
+// 게시글 id 유효성 검사
+exports.postIdValidator = [
+  param("id").isInt().withMessage("숫자만 입력해 주세요."),
 ];
 
 exports.validatorErrorChecker = (req, res, next) => {

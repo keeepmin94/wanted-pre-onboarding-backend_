@@ -18,7 +18,6 @@ module.exports = {
   },
   verifyToken: (req, res, next) => {
     try {
-      console.log(req.headers);
       // jwt의 검증이 끝나면 jwt의 내용물을 decoded에 넣는다
       res.locals.decoded = jwt.verify(
         //req.headers.authorization,
