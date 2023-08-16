@@ -23,7 +23,7 @@ router.post("/create", verifyToken, uploadPost);
 
 // GET /post/all/:page
 router.get(
-  "/all/:page",
+  "/all",
   verifyToken,
   paginationValidator,
   validatorErrorChecker,

@@ -18,18 +18,14 @@ exports.uploadPost = async (req, res, next) => {
 
 exports.getAllPosts = async (req, res, next) => {
   try {
-    const params = req.params;
-    const posts = await Post.findAll(
-      {
-        attributes: ["id", "content", "createdAt", "updatedAt"],
-        include: { model: User, attributes: ["id", "email"] },
-      },
-      {
-        order: [["createdAt", "DESC"]],
-        offset: counter * (params.page - 1), //params.counter * params.page
-        limit: counter, //params.counter
-      }
-    );
+    // const params = req.params;
+    const posts = await Post.findAll({
+      attributes: ["id", "content", "createdAt", "updatedAt"],
+      include: { model: User, attributes: ["id", "email"] },
+      order: [["createdAt", "DESC"]],
+      offset: parseInt(req.query.counter) * (parseInt(req.query.page) - 1), //params.counter * params.page
+      limit: parseInt(req.query.counter), //params.counter
+    });
 
     res.json({
       code: 200,
@@ -106,32 +102,32 @@ exports.updatePost = async (req, res, next) => {
 };
 
 exports.deletePost = async (req, res, next) => {
-    try {
-      const params = req.params;
-      const post = await Post.findOne({
-        where: { id: params.id },
-      });
-  
-      if (!post) {
-        return res
-          .status(404)
-          .json({ errors: `Post [${params.id}]id doesn't exist.` });
-      }
-  
-      if (post.UserId !== res.locals.decoded.id) {
-        return res.status(404).json({ errors: `Doesn't match the author's ID.` });
-      }
-  
-      await post.destroy();
-  
-      res.json({
-        code: 200,
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        code: 500,
-        message: "서버 에러",
-      });
+  try {
+    const params = req.params;
+    const post = await Post.findOne({
+      where: { id: params.id },
+    });
+
+    if (!post) {
+      return res
+        .status(404)
+        .json({ errors: `Post [${params.id}]id doesn't exist.` });
     }
-  };
+
+    if (post.UserId !== res.locals.decoded.id) {
+      return res.status(404).json({ errors: `Doesn't match the author's ID.` });
+    }
+
+    await post.destroy();
+
+    res.json({
+      code: 200,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      code: 500,
+      message: "서버 에러",
+    });
+  }
+};

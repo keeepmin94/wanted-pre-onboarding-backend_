@@ -3,7 +3,7 @@
     "username": "root",
     "password": "wanted1234",
     "database": "wanted_db",
-    "host": "wanted_internship-mysql-1",
+    "host": "mysql",
     "port": "3306",
     "dialect": "mysql"
   },

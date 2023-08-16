@@ -1,4 +1,4 @@
-const { body, param } = require("express-validator");
+const { body, param, query } = require("express-validator");
 const { validationResult } = require("express-validator");
 
 // 회원 가입 요청에 대한 유효성 검사 미들웨어
@@ -12,11 +12,16 @@ exports.signupValidator = [
 
 // 페이지네이션 유효성 검사
 exports.paginationValidator = [
-  param("page")
+  query("page")
     .isInt()
     .withMessage("숫자만 입력해 주세요.")
     .custom((value) => value > 0)
     .withMessage("Page must be greater than 0"),
+  query("counter")
+    .isInt()
+    .withMessage("숫자만 입력해 주세요.")
+    .custom((value) => value > 0)
+    .withMessage("counter must be greater than 0"),
 ];
 
 // 게시글 id 유효성 검사
