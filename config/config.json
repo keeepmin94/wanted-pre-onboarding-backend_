@@ -3,8 +3,8 @@
     "username": "root",
     "password": "wanted1234",
     "database": "wanted_db",
-    "host": "127.0.0.1",
-    "port": "3308",
+    "host": "wanted_internship-mysql-1",
+    "port": "3306",
     "dialect": "mysql"
   },
   "test": {
